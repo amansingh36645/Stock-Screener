@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const Investment = () => {
   const [netWorth, setnetWorth] = useState();
@@ -32,6 +33,23 @@ const Investment = () => {
       setreturnPercentage(userData.returnPercentage)
       setavailableCash(userData.availableCash)
     }
+
+
+  },[])
+
+  const fetchStock = async ()  => {
+    const apiurl = `https://finnhub.io/api/v1/quote?symbol=AAPL&token=`
+    const api = `cremcchr01qnd5cvr330cremcchr01qnd5cvr33g`
+    let response = await axios.get(apiurl + api)
+    let data = response.data
+
+    
+    console.log(data);
+  }
+
+  useEffect(()=>{
+    fetchStock();
+    
   },[])
 
   const stocks = [

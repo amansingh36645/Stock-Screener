@@ -23,34 +23,30 @@ const Investment = () => {
     }
   }, []);
 
-  useEffect(()=>{
-    if(localStorage.getItem("data")){
-      let userData = JSON.parse(localStorage.getItem("data"))
+  useEffect(() => {
+    if (localStorage.getItem("data")) {
+      let userData = JSON.parse(localStorage.getItem("data"));
       console.log(userData);
-      setnetWorth(userData.netWorth)
-      setInvested(userData.investedAmount)
-      settotalReturn(userData.returns)
-      setreturnPercentage(userData.returnPercentage)
-      setavailableCash(userData.availableCash)
+      setnetWorth(userData.netWorth);
+      setInvested(userData.investedAmount);
+      settotalReturn(userData.returns);
+      setreturnPercentage(userData.returnPercentage);
+      setavailableCash(userData.availableCash);
     }
+  }, []);
 
+  const fetchStock = async () => {
+    const apiurl = `https://finnhub.io/api/v1/quote?symbol=AAPL&token=`;
+    const api = `cremcchr01qnd5cvr330cremcchr01qnd5cvr33g`;
+    let response = await axios.get(apiurl + api);
+    let { c, dp } = response.data;
+    const stockData = { c, dp };
+    console.log(stockData);
+  };
 
-  },[])
-
-  const fetchStock = async ()  => {
-    const apiurl = `https://finnhub.io/api/v1/quote?symbol=AAPL&token=`
-    const api = `cremcchr01qnd5cvr330cremcchr01qnd5cvr33g`
-    let response = await axios.get(apiurl + api)
-    let data = response.data
-
-    
-    console.log(data);
-  }
-
-  useEffect(()=>{
-    fetchStock();
-    
-  },[])
+  // useEffect(() => {
+  //   fetchStock();
+  // }, []);
 
   const stocks = [
     {

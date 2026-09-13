@@ -7,6 +7,13 @@ const Investment = () => {
   const [totalReturn, settotalReturn] = useState();
   const [returnPercentage, setreturnPercentage] = useState();
   const [availableCash, setavailableCash] = useState();
+  //investment stock selection area
+  const [symbol, setSymbol] = useState();
+  const [symbol2, setSymbol2] = useState();
+  const [symbol3, setSymbol3] = useState();
+  const [stock1, setStock1] = useState();
+  const [stock2, setStock2] = useState();
+  const [stock3, setStock3] = useState();
 
   useEffect(() => {
     if (!localStorage.getItem("data")) {
@@ -35,18 +42,43 @@ const Investment = () => {
     }
   }, []);
 
-  const fetchStock = async () => {
+  const fetchStock1 = async () => {
     const apiurl = `https://finnhub.io/api/v1/quote?symbol=AAPL&token=`;
     const api = `cremcchr01qnd5cvr330cremcchr01qnd5cvr33g`;
     let response = await axios.get(apiurl + api);
     let { c, dp } = response.data;
     const stockData = { c, dp };
-    console.log(stockData);
+    setStock1(stockData);
+    setSymbol(`AAPL`);
   };
 
-  // useEffect(() => {
-  //   fetchStock();
-  // }, []);
+  const fetchStock2 = async () => {
+    const apiurl = `https://finnhub.io/api/v1/quote?symbol=AMZN&token=`;
+    const api = `cremcchr01qnd5cvr330cremcchr01qnd5cvr33g`;
+    let response = await axios.get(apiurl + api);
+    let { c, dp } = response.data;
+    const stockData = { c, dp };
+    setStock2(stockData);
+    setSymbol2(`AMZN`);
+    console.log(stock2.c,symbol2);
+    
+  };
+
+  const fetchStock3 = async () => {
+    const apiurl = `https://finnhub.io/api/v1/quote?symbol=IBM&token=`;
+    const api = `cremcchr01qnd5cvr330cremcchr01qnd5cvr33g`;
+    let response = await axios.get(apiurl + api);
+    let { c, dp } = response.data;
+    const stockData = { c, dp };
+    setStock3(stockData);
+    setSymbol3(`IBM`);
+  };
+
+  useEffect(() => {
+    fetchStock1();
+    fetchStock2();
+    fetchStock3();
+  }, []);
 
   const stocks = [
     {
@@ -174,65 +206,35 @@ const Investment = () => {
           </p>
         </div>
 
-        {/* Search */}
+        {/* STOCK 1 */}
         <div className="mb-5">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search stocks..."
-              className="w-full rounded-xl border border-gray-800 bg-[#101620] px-4 py-3 pl-11 text-sm text-white placeholder-gray-500 outline-none transition focus:border-gray-600"
-            />
-
-            <svg
-              className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="m21 21-4.35-4.35m2.1-5.4a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"
-              />
-            </svg>
-          </div>
-        </div>
-
-        {/* Stock List */}
-        <div className="overflow-hidden rounded-2xl border border-gray-800 bg-[#101620]">
-          {stocks.map((stock, index) => (
+          <div className="overflow-hidden rounded-2xl border border-gray-800 bg-[#101620]">
             <div
-              key={stock.symbol}
-              className={`flex flex-col gap-4 p-5 transition hover:bg-[#151C27] sm:flex-row sm:items-center sm:justify-between ${
-                index !== stocks.length - 1 ? "border-b border-gray-800" : ""
-              }`}
+              className={`flex flex-col gap-4 p-5 transition hover:bg-[#151C27] sm:flex-row sm:items-center sm:justify-between`}
             >
               {/* Stock Info */}
               <div className="flex items-center gap-4">
                 {/* Logo */}
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#1B2432] text-sm font-bold text-gray-300">
-                  {stock.symbol.slice(0, 2)}
+                  {symbol}
                 </div>
 
                 <div>
-                  <h3 className="font-semibold">{stock.name}</h3>
-
-                  <p className="mt-1 text-xs text-gray-500">{stock.symbol}</p>
+                  <h3 className="font-semibold">{symbol}</h3>
                 </div>
               </div>
 
               {/* Price + Change + Button */}
               <div className="flex items-center justify-between gap-6 sm:justify-end">
                 <div className="text-right">
-                  <p className="font-semibold">{stock.price}</p>
+                  <p className="font-semibold">{stock1.c}</p>
 
                   <p
-                    className={`mt-1 text-sm ${
+                    className={`mt-1 text-sm
                       stock.positive ? "text-green-400" : "text-red-400"
-                    }`}
+                    `}
                   >
-                    {stock.change}
+                    {`${stock1.dp} %`}
                   </p>
                 </div>
 
@@ -241,7 +243,85 @@ const Investment = () => {
                 </button>
               </div>
             </div>
-          ))}
+          </div>
+        </div>
+        {/* STOCK 2 */}
+        <div className="mb-5">
+          <div className="overflow-hidden rounded-2xl border border-gray-800 bg-[#101620]">
+            <div
+              className={`flex flex-col gap-4 p-5 transition hover:bg-[#151C27] sm:flex-row sm:items-center sm:justify-between`}
+            >
+              {/* Stock Info */}
+              <div className="flex items-center gap-4">
+                {/* Logo */}
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#1B2432] text-sm font-bold text-gray-300">
+                  {symbol}
+                </div>
+
+                <div>
+                  <h3 className="font-semibold">{`AAPL`}</h3>
+                </div>
+              </div>
+
+              {/* Price + Change + Button */}
+              <div className="flex items-center justify-between gap-6 sm:justify-end">
+                <div className="text-right">
+                  <p className="font-semibold">{1234}</p>
+
+                  <p
+                    className={`mt-1 text-sm
+                      stock.positive ? "text-green-400" : "text-red-400"
+                    `}
+                  >
+                    {123}
+                  </p>
+                </div>
+
+                <button className="rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-gray-200">
+                  Invest
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* STOCK 3 */}
+        <div className="mb-5">
+          <div className="overflow-hidden rounded-2xl border border-gray-800 bg-[#101620]">
+            <div
+              className={`flex flex-col gap-4 p-5 transition hover:bg-[#151C27] sm:flex-row sm:items-center sm:justify-between`}
+            >
+              {/* Stock Info */}
+              <div className="flex items-center gap-4">
+                {/* Logo */}
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#1B2432] text-sm font-bold text-gray-300">
+                  {symbol}
+                </div>
+
+                <div>
+                  <h3 className="font-semibold">{`AAPL`}</h3>
+                </div>
+              </div>
+
+              {/* Price + Change + Button */}
+              <div className="flex items-center justify-between gap-6 sm:justify-end">
+                <div className="text-right">
+                  <p className="font-semibold">{1234}</p>
+
+                  <p
+                    className={`mt-1 text-sm
+                      stock.positive ? "text-green-400" : "text-red-400"
+                    `}
+                  >
+                    {123}
+                  </p>
+                </div>
+
+                <button className="rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-gray-200">
+                  Invest
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
